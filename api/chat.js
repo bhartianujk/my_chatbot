@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ error: 'Method not allowed.' }); }
   const key = process.env.GEMINI_API_KEY;
   if (!key) return res.status(503).json({ error: 'Gemini is not configured. Add GEMINI_API_KEY in Vercel Environment Variables.' });
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+  const model = process.env.GEMINI_MODEL || 'ggemini-3.8-flash';
   if (!/^[a-zA-Z0-9._-]+$/.test(model)) return res.status(500).json({ error: 'Invalid model configuration.' });
   const input = req.body?.messages;
   if (!Array.isArray(input) || input.length < 1 || input.length > MAX_MESSAGES || input.some(m => !m || !ALLOWED_ROLES.has(m.role) || typeof m.content !== 'string' || !m.content.trim() || m.content.length > MAX_TEXT) || input.at(-1).role !== 'user') {
